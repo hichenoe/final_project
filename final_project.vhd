@@ -33,6 +33,7 @@ ENTITY final_project IS
     clk          : IN  STD_LOGIC;                     --system clock
     ps2_clk      : IN  STD_LOGIC;                     --clock signal from PS/2 keyboard
     ps2_data     : IN  STD_LOGIC;                     --data signal from PS/2 keyboard
+	 BUZZ			  : OUT STD_LOGIC;
 	 led1			  : OUT STD_LOGIC;
 	 led2			  : OUT STD_LOGIC;
 	 led3			  : OUT STD_LOGIC;
@@ -58,6 +59,9 @@ ARCHITECTURE logic OF final_project IS
   SIGNAL error        : STD_LOGIC;                          --validate parity, start, and stop bits
   SIGNAL count_idle   : INTEGER RANGE 0 TO clk_freq/18_000; --counter to determine PS/2 is idle
   SIGNAL keyval       : STD_LOGIC_VECTOR(8 DOWNTO 1);
+  SIGNAL counter 		 : STD_LOGIC_VECTOR(17 DOWNTO 0);
+
+  signal CLK_1Hz		 : STD_LOGIC;
   
   --declare debounce component for debouncing PS2 input signals
   COMPONENT debounce IS
@@ -129,6 +133,14 @@ BEGIN
 				 led11 <= '0';
 				 led12 <= '0';
 				 led13 <= '0';
+				 if clk'event and clk = '1' then
+						if counter < "101110100101111000" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+				end if;
 		 ELSIF keyval = X"1D" then
 				 led1 <= '0';
 				 led2 <= '1';
@@ -143,6 +155,14 @@ BEGIN
 				 led11 <= '0';
 				 led12 <= '0';
 				 led13 <= '0';
+				 if clk'event and clk = '1' then
+						if counter < "101100000100011001" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+				end if;
 		 ELSIF keyval = X"1B" then
 				 led1 <= '0';
 				 led2 <= '0';
@@ -157,6 +177,14 @@ BEGIN
 				 led11 <= '0';
 				 led12 <= '0';
 				 led13 <= '0';
+				 if clk'event and clk = '1' then
+						if counter < "101001100001010100" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+				end if;
 		 ELSIF keyval = X"24" then
 				 led1 <= '0';
 				 led2 <= '0';
@@ -171,6 +199,14 @@ BEGIN
 				 led11 <= '0';
 				 led12 <= '0';
 				 led13 <= '0';
+				 if clk'event and clk = '1' then
+						if counter < "100111010000000100" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+				end if;
 		 ELSIF keyval = X"23" then
 				 led1 <= '0';
 				 led2 <= '0';
@@ -185,6 +221,14 @@ BEGIN
 				 led11 <= '0';
 				 led12 <= '0';
 				 led13 <= '0';
+				 if clk'event and clk = '1' then
+						if counter < "100100111111011011" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+				end if;
 		 ELSIF keyval = X"2B" then
 				 led1 <= '0';
 				 led2 <= '0';
@@ -199,6 +243,15 @@ BEGIN
 				 led11 <= '0';
 				 led12 <= '0';
 				 led13 <= '0';
+				if clk'event and clk = '1' then
+						if counter < "100010111110100010" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+				end if;
+
 		 ELSIF keyval = X"2C" then
 				 led1 <= '0';
 				 led2 <= '0';
@@ -213,6 +266,15 @@ BEGIN
 				 led11 <= '0';
 				 led12 <= '0';
 				 led13 <= '0';
+				  if clk'event and clk = '1' then
+						if counter < "100000111111011111" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+				end if;
+
 		 ELSIF keyval = X"34" then
 				 led1 <= '0';
 				 led2 <= '0';
@@ -227,6 +289,15 @@ BEGIN
 				 led11 <= '0';
 				 led12 <= '0';
 				 led13 <= '0';
+				 if clk'event and clk = '1' then
+						if counter < "11111001000111111" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+				end if;
+
 		 ELSIF keyval = X"35" then
 				 led1 <= '0';
 				 led2 <= '0';
@@ -241,6 +312,15 @@ BEGIN
 				 led11 <= '0';
 				 led12 <= '0';
 				 led13 <= '0';
+				 if clk'event and clk = '1' then
+						if counter < "11101011010100010" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+				end if;
+
 		 ELSIF keyval = X"33" then
 				 led1 <= '0';
 				 led2 <= '0';
@@ -255,6 +335,16 @@ BEGIN
 				 led11 <= '0';
 				 led12 <= '0';
 				 led13 <= '0';
+				if clk'event and clk = '1' then
+						if counter < "011011101111100100" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+				end if;
+
+
 		 ELSIF keyval = X"3C" then
 				 led1 <= '0';
 				 led2 <= '0';
@@ -269,6 +359,8 @@ BEGIN
 				 led11 <= '1';
 				 led12 <= '0';
 				 led13 <= '0';
+
+
 		 ELSIF keyval = X"3B" then
 				 led1 <= '0';
 				 led2 <= '0';
@@ -283,6 +375,7 @@ BEGIN
 				 led11 <= '0';
 				 led12 <= '1';
 				 led13 <= '0';
+			
 		 ELSIF keyval = X"42" then
 				 led1 <= '0';
 				 led2 <= '0';
@@ -296,7 +389,8 @@ BEGIN
 				 led10 <= '0';
 				 led11 <= '0';
 				 led12 <= '0';
-				 led13 <= '1';		 
+				 led13 <= '1';	
+
 		 ELSE 
 				 led1 <= '0';
 				 led2 <= '0';
@@ -318,6 +412,8 @@ BEGIN
       
     END IF;
   END PROCESS;
+  
+  BUZZ <= CLK_1Hz;
   
 END logic;
 
