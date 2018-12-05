@@ -33,6 +33,7 @@ ENTITY final_project IS
     clk          : IN  STD_LOGIC;                     --system clock
     ps2_clk      : IN  STD_LOGIC;                     --clock signal from PS/2 keyboard
     ps2_data     : IN  STD_LOGIC;                     --data signal from PS/2 keyboard
+	 switch		  : IN  STD_LOGIC;
 	 BUZZ			  : OUT STD_LOGIC;
 	 led1			  : OUT STD_LOGIC;
 	 led2			  : OUT STD_LOGIC;
@@ -46,7 +47,7 @@ ENTITY final_project IS
 	 led10		  : OUT STD_LOGIC;
 	 led11		  : OUT STD_LOGIC;
 	 led12		  : OUT STD_LOGIC;
-	 led13		  : OUT STD_LOGIC;
+	 led13    	  : OUT STD_LOGIC;
     ps2_code_new : OUT STD_LOGIC;                     --flag that new PS/2 code is available on ps2_code bus
     ps2_code     : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)); --code received from PS/2
 END final_project;
@@ -60,6 +61,8 @@ ARCHITECTURE logic OF final_project IS
   SIGNAL count_idle   : INTEGER RANGE 0 TO clk_freq/18_000; --counter to determine PS/2 is idle
   SIGNAL keyval       : STD_LOGIC_VECTOR(8 DOWNTO 1);
   SIGNAL counter 		 : STD_LOGIC_VECTOR(17 DOWNTO 0);
+
+
 
   signal CLK_1Hz		 : STD_LOGIC;
   
@@ -119,299 +122,597 @@ BEGIN
         ps2_code_new <= '1';                                   --set flag that new PS/2 code is available
         ps2_code <= ps2_word(8 DOWNTO 1);                      --output new PS/2 code
 		  keyval <= ps2_word(8 DOWNTO 1);
-		 IF keyval = X"1C" THEN
-				 led1 <= '1';
-				 led2 <= '0';
-				 led3 <= '0';
-				 led4 <= '0';
-				 led5 <= '0';
-				 led6 <= '0';
-				 led7 <= '0';
-				 led8 <= '0';
-				 led9 <= '0';
-				 led10 <= '0';
-				 led11 <= '0';
-				 led12 <= '0';
-				 led13 <= '0';
-				 if clk'event and clk = '1' then
+		  if switch = '0' then
+		  
+				 IF keyval = X"1C" THEN
+						 led1 <= '1';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';	 
 						if counter < "101110100101111000" then
 							counter <= counter + 1;
 						else
 							CLK_1Hz <= not CLK_1Hz;
 							counter <= (others => '0');
 						end if;
-				end if;
-		 ELSIF keyval = X"1D" then
-				 led1 <= '0';
-				 led2 <= '1';
-				 led3 <= '0';
-				 led4 <= '0';
-				 led5 <= '0';
-				 led6 <= '0';
-				 led7 <= '0';
-				 led8 <= '0';
-				 led9 <= '0';
-				 led10 <= '0';
-				 led11 <= '0';
-				 led12 <= '0';
-				 led13 <= '0';
-				 if clk'event and clk = '1' then
+						
+					ELSIF keyval = X"1D" then
+						 led1 <= '0';
+						 led2 <= '1';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
 						if counter < "101100000100011001" then
 							counter <= counter + 1;
 						else
 							CLK_1Hz <= not CLK_1Hz;
 							counter <= (others => '0');
 						end if;
-				end if;
-		 ELSIF keyval = X"1B" then
-				 led1 <= '0';
-				 led2 <= '0';
-				 led3 <= '1';
-				 led4 <= '0';
-				 led5 <= '0';
-				 led6 <= '0';
-				 led7 <= '0';
-				 led8 <= '0';
-				 led9 <= '0';
-				 led10 <= '0';
-				 led11 <= '0';
-				 led12 <= '0';
-				 led13 <= '0';
-				 if clk'event and clk = '1' then
+						
+				 ELSIF keyval = X"1B" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '1';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';						
 						if counter < "101001100001010100" then
 							counter <= counter + 1;
 						else
 							CLK_1Hz <= not CLK_1Hz;
 							counter <= (others => '0');
 						end if;
-				end if;
-		 ELSIF keyval = X"24" then
-				 led1 <= '0';
-				 led2 <= '0';
-				 led3 <= '0';
-				 led4 <= '1';
-				 led5 <= '0';
-				 led6 <= '0';
-				 led7 <= '0';
-				 led8 <= '0';
-				 led9 <= '0';
-				 led10 <= '0';
-				 led11 <= '0';
-				 led12 <= '0';
-				 led13 <= '0';
-				 if clk'event and clk = '1' then
+									
+				 ELSIF keyval = X"24" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '1';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';						
 						if counter < "100111010000000100" then
 							counter <= counter + 1;
 						else
 							CLK_1Hz <= not CLK_1Hz;
 							counter <= (others => '0');
 						end if;
-				end if;
-		 ELSIF keyval = X"23" then
-				 led1 <= '0';
-				 led2 <= '0';
-				 led3 <= '0';
-				 led4 <= '0';
-				 led5 <= '1';
-				 led6 <= '0';
-				 led7 <= '0';
-				 led8 <= '0';
-				 led9 <= '0';
-				 led10 <= '0';
-				 led11 <= '0';
-				 led12 <= '0';
-				 led13 <= '0';
-				 if clk'event and clk = '1' then
+						
+				 ELSIF keyval = X"23" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '1';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';					
 						if counter < "100100111111011011" then
 							counter <= counter + 1;
 						else
 							CLK_1Hz <= not CLK_1Hz;
 							counter <= (others => '0');
 						end if;
-				end if;
-		 ELSIF keyval = X"2B" then
-				 led1 <= '0';
-				 led2 <= '0';
-				 led3 <= '0';
-				 led4 <= '0';
-				 led5 <= '0';
-				 led6 <= '1';
-				 led7 <= '0';
-				 led8 <= '0';
-				 led9 <= '0';
-				 led10 <= '0';
-				 led11 <= '0';
-				 led12 <= '0';
-				 led13 <= '0';
-				if clk'event and clk = '1' then
+						
+				 ELSIF keyval = X"2B" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '1';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
 						if counter < "100010111110100010" then
 							counter <= counter + 1;
 						else
 							CLK_1Hz <= not CLK_1Hz;
 							counter <= (others => '0');
 						end if;
-				end if;
-
-		 ELSIF keyval = X"2C" then
-				 led1 <= '0';
-				 led2 <= '0';
-				 led3 <= '0';
-				 led4 <= '0';
-				 led5 <= '0';
-				 led6 <= '0';
-				 led7 <= '1';
-				 led8 <= '0';
-				 led9 <= '0';
-				 led10 <= '0';
-				 led11 <= '0';
-				 led12 <= '0';
-				 led13 <= '0';
-				  if clk'event and clk = '1' then
-						if counter < "100000111111011111" then
+							
+				ELSIF keyval = X"2C" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '1';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
+						if counter < "100000011000010010" then
 							counter <= counter + 1;
 						else
 							CLK_1Hz <= not CLK_1Hz;
 							counter <= (others => '0');
 						end if;
-				end if;
 
-		 ELSIF keyval = X"34" then
-				 led1 <= '0';
-				 led2 <= '0';
-				 led3 <= '0';
-				 led4 <= '0';
-				 led5 <= '0';
-				 led6 <= '0';
-				 led7 <= '0';
-				 led8 <= '1';
-				 led9 <= '0';
-				 led10 <= '0';
-				 led11 <= '0';
-				 led12 <= '0';
-				 led13 <= '0';
-				 if clk'event and clk = '1' then
+				 ELSIF keyval = X"34" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '1';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
 						if counter < "11111001000111111" then
 							counter <= counter + 1;
 						else
 							CLK_1Hz <= not CLK_1Hz;
 							counter <= (others => '0');
 						end if;
-				end if;
-
-		 ELSIF keyval = X"35" then
-				 led1 <= '0';
-				 led2 <= '0';
-				 led3 <= '0';
-				 led4 <= '0';
-				 led5 <= '0';
-				 led6 <= '0';
-				 led7 <= '0';
-				 led8 <= '0';
-				 led9 <= '1';
-				 led10 <= '0';
-				 led11 <= '0';
-				 led12 <= '0';
-				 led13 <= '0';
-				 if clk'event and clk = '1' then
+								
+				 ELSIF keyval = X"35" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '1';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
 						if counter < "11101011010100010" then
 							counter <= counter + 1;
 						else
 							CLK_1Hz <= not CLK_1Hz;
 							counter <= (others => '0');
 						end if;
-				end if;
 
-		 ELSIF keyval = X"33" then
-				 led1 <= '0';
-				 led2 <= '0';
-				 led3 <= '0';
-				 led4 <= '0';
-				 led5 <= '0';
-				 led6 <= '0';
-				 led7 <= '0';
-				 led8 <= '0';
-				 led9 <= '0';
-				 led10 <= '1';
-				 led11 <= '0';
-				 led12 <= '0';
-				 led13 <= '0';
-				if clk'event and clk = '1' then
+				 ELSIF keyval = X"33" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '1';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
 						if counter < "011011101111100100" then
 							counter <= counter + 1;
 						else
 							CLK_1Hz <= not CLK_1Hz;
 							counter <= (others => '0');
 						end if;
-				end if;
 
+					 ELSIF keyval = X"3C" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '1';
+						 led12 <= '0';
+						 led13 <= '0';
+						if counter < "11010001100100000" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
 
-		 ELSIF keyval = X"3C" then
-				 led1 <= '0';
-				 led2 <= '0';
-				 led3 <= '0';
-				 led4 <= '0';
-				 led5 <= '0';
-				 led6 <= '0';
-				 led7 <= '0';
-				 led8 <= '0';
-				 led9 <= '0';
-				 led10 <= '0';
-				 led11 <= '1';
-				 led12 <= '0';
-				 led13 <= '0';
+				 ELSIF keyval = X"3B" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '1';
+						 led13 <= '0';
+						if counter < "011000101101011111" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
 
+				 ELSIF keyval = X"42" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '1';
+						if counter < "010111010101110010" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
 
-		 ELSIF keyval = X"3B" then
-				 led1 <= '0';
-				 led2 <= '0';
-				 led3 <= '0';
-				 led4 <= '0';
-				 led5 <= '0';
-				 led6 <= '0';
-				 led7 <= '0';
-				 led8 <= '0';
-				 led9 <= '0';
-				 led10 <= '0';
-				 led11 <= '0';
-				 led12 <= '1';
-				 led13 <= '0';
-			
-		 ELSIF keyval = X"42" then
-				 led1 <= '0';
-				 led2 <= '0';
-				 led3 <= '0';
-				 led4 <= '0';
-				 led5 <= '0';
-				 led6 <= '0';
-				 led7 <= '0';
-				 led8 <= '0';
-				 led9 <= '0';
-				 led10 <= '0';
-				 led11 <= '0';
-				 led12 <= '0';
-				 led13 <= '1';	
+				 ELSE 
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
+						 CLK_1Hz <= '0';
+				  END IF;
+			else 
+				  IF keyval = X"1C" THEN
+						 led1 <= '1';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
+						if counter < "010111010101110010" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+						
+					ELSIF keyval = X"1D" then
+						 led1 <= '0';
+						 led2 <= '1';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
+						if counter < "10110000010001101" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+						
+				 ELSIF keyval = X"1B" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '1';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
+						if counter < "10100110010111011" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+									
+				 ELSIF keyval = X"24" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '1';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
+						if counter < "10011101000000010" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;						
+						
+				 ELSIF keyval = X"23" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '1';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
+						if counter < "10010100001100001" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+						
+				 ELSIF keyval = X"2B" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '1';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
+						if counter < "10001011111010001" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+							
+				ELSIF keyval = X"2C" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '1';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
+						if counter < "10000011111110000" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
 
-		 ELSE 
-				 led1 <= '0';
-				 led2 <= '0';
-				 led3 <= '0';
-				 led4 <= '0';
-				 led5 <= '0';
-				 led6 <= '0';
-				 led7 <= '0';
-				 led8 <= '0';
-				 led9 <= '0';
-				 led10 <= '0';
-				 led11 <= '0';
-				 led12 <= '0';
-				 led13 <= '0';
-		  END IF;
+				 ELSIF keyval = X"34" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '1';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
+						if counter < "1111100100100000" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+								
+				 ELSIF keyval = X"35" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '1';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
+						if counter < "1110101100001000" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+
+				 ELSIF keyval = X"33" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '1';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
+						if counter < "1101110111110010" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+							
+					 ELSIF keyval = X"3C" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '1';
+						 led12 <= '0';
+						 led13 <= '0';
+						if counter < "1101000110010000" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+
+				 ELSIF keyval = X"3B" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '1';
+						 led13 <= '0';
+						if counter < "1100010110101111" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+					
+				 ELSIF keyval = X"42" then
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '1';
+						if counter < "1011101010001011" then
+							counter <= counter + 1;
+						else
+							CLK_1Hz <= not CLK_1Hz;
+							counter <= (others => '0');
+						end if;
+							
+				 ELSE 
+						 led1 <= '0';
+						 led2 <= '0';
+						 led3 <= '0';
+						 led4 <= '0';
+						 led5 <= '0';
+						 led6 <= '0';
+						 led7 <= '0';
+						 led8 <= '0';
+						 led9 <= '0';
+						 led10 <= '0';
+						 led11 <= '0';
+						 led12 <= '0';
+						 led13 <= '0';
+						 CLK_1Hz <= '0';
+				  END IF;
+			end if;
+				  
       ELSE                                                   --PS/2 port active or error detected
         ps2_code_new <= '0';                                   --set flag that PS/2 transaction is in progress
       END IF;
       
     END IF;
   END PROCESS;
+  
+  
   
   BUZZ <= CLK_1Hz;
   
